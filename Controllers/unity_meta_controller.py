@@ -64,7 +64,6 @@ class MetaController(object):
                     self.select_next_abstract_action(self.current_abstract_state)
 
                 observable.send_string('-1,{}'.format(self.current_controller_ind))
-                print('Current controller: {}'.format(self.current_controller_ind))
 
         elif message == 'Failed task':
             pass

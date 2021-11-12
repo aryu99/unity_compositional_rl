@@ -99,7 +99,8 @@ class Results(object):
             elapsed_training_steps = self.data['cparl_loop_training_steps'][-1]
         else:
             elapsed_training_steps = 0
-        self.data['cparl_loop_training_steps'].append(elapsed_training_steps + training_steps)
+        self.data['cparl_loop_training_steps'].append(elapsed_training_steps + \
+                                                        training_steps)
 
     def update_controllers(self, controller_list):
         """

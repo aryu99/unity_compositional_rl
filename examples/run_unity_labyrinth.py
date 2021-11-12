@@ -37,9 +37,9 @@ save_learned_controllers = True
 experiment_name = 'unity_labyrinth'
 
 base_path = os.path.abspath(os.path.curdir)
-string_ind = base_path.find('src')
+string_ind = base_path.find('examples')
 assert(string_ind >= 0)
-base_path = base_path[0:string_ind + 4]
+base_path = base_path[0:string_ind]
 base_path = os.path.join(base_path, 'data', 'saved_controllers')
 
 load_dir = os.path.join(base_path, load_folder_name)
