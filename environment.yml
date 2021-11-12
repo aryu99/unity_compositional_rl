@@ -1,0 +1,21 @@
+name: unity_agents
+channels:
+  - conda-forge
+  - https://conda.anaconda.org/gurobi
+  - pytorch
+dependencies:
+  - python=3.8
+  - numpy
+  - scipy
+  - matplotlib
+  - tqdm
+  - gurobi
+  - gym
+  - cudatoolkit=11.3
+  - pytorch
+  - torchvision
+  - torchaudio 
+  - pip
+  - pip:
+    - mlagents==0.27.0
+    - stable-baselines3
