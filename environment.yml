@@ -15,6 +15,7 @@ dependencies:
   - pytorch
   - torchvision
   - torchaudio 
+  - tikzplotlib
   - pip
   - pip:
     - mlagents==0.27.0
