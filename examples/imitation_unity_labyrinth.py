@@ -4,7 +4,7 @@ import tempfile
 # import os
 
 import stable_baselines3 as sb3
-from stable_baselines3.common.utils import obs_as_tensor
+# from stable_baselines3.common.utils import obs_as_tensor
 
 from imitation.algorithms import adversarial, bc
 from imitation.util import logger
@@ -15,15 +15,13 @@ from utils.demo_loader import load_and_parse_unity_demo
 from Environments.unity_labyrinth import build_unity_labyrinth_env
 
 
-
-
 tempdir = tempfile.TemporaryDirectory(prefix="quickstart")
 tempdir_path = pathlib.Path(tempdir.name)
 print(f"All Tensorboards and logging are being written inside {tempdir_path}/.")
 
 # Load the unity demo file
 file_path = os.path.abspath('../demos/labyrinth/IRLnonlava.demo')
-transitions = load_and_parse_unity_demo(demo_file=file_path, sequence_length=3382)
+transitions = load_and_parse_unity_demo(demo_file=file_path, sequence_length=2513)
 
 # Load the unity labyrinth environment.
 env_settings = {
@@ -62,7 +60,7 @@ for episode_ind in range(n_episodes):
     obs = env.reset()
     # self.reset(side_channels)
     for step in range(n_steps):
-        action, _states = bc_trainer.policy.forward(obs, deterministic=True)
+        action, _states = bc_trainer.policy.predict(obs, deterministic=True)
         obs, reward, done, info = env.step(action)
         if done:
             break
