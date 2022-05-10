@@ -27,4 +27,6 @@ To run the RL example, change the current directory to the examples folder and r
 To run the imitation learning example, change the current directory to the examples folder and run:
 > python imitation_unity_labyrinth
 
-BC results are given in bc_results.gif in the root folder.
+Behavioral Cloning Output on the labyrinth environment:
+
+![Behavioral Cloning Output](https://github.com/aryu99/unity_compositional_rl/blob/main/bc_results.gif)
