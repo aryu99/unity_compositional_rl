@@ -8,7 +8,7 @@ or
 
 https://github.com/aryu99/unity_labyrinth_mod
 
-Port this folder to WSL2 on the Windows OS. Run the Unity Environment (in the unity_env folder on windows).
+Port this folder to WSL2 on the Windows OS. Run the Unity Environment project (clone from the above url) on windows.
 
 Use Anaconda (https://www.anaconda.com/products/individual) to create a virtual environment with the appropriate packages.
 After downloading and installing Anaconda 3, edit environment.yml so that the proper cuda toolkit is being installed (the file is currently configured for CUDA 11.3). 
