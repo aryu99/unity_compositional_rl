@@ -2,7 +2,7 @@
 
 ## Installation
 
-The Unity Project: https://github.com/cyrusneary/unity_labyrinth
+The Unity Project: https://github.com/aryu99/Unity_laby
 
 or 
 
