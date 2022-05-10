@@ -12,7 +12,7 @@ import tikzplotlib
 # %%
 # load_folder_name = '2021-05-22_13-53-56_minigrid_labyrinth'
 # experiment_name = 'minigrid_labyrinth'
-load_folder_name = '2021-11-02_23-15-04_unity_labyrinth'
+load_folder_name = '2022-05-09_15-05-40_unity_labyrinth'
 experiment_name = 'unity_labyrinth'
 
 base_path = os.path.abspath(os.path.curdir)
@@ -65,6 +65,12 @@ ax.set_ylim(yl)
         
 # save_path = os.path.join(os.path.curdir, 'figures', 'training_schedule.tex')
 # tikzplotlib.save(save_path)
+
+ax.set_title('Training Schedule of the Low-level Controllers: TD3')
+ax.set_xlabel('Elapsed Total Training Steps')
+ax.set_ylabel('Sub-system Index')
+
+plt.savefig('schedule_td3_2.png')
 
 
 # %%

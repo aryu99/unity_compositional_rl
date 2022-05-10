@@ -93,7 +93,7 @@ class MetaController(object):
         self.current_controller_ind = self.select_next_abstract_action(
                                             self.current_abstract_state)
         side_channels['custom_side_channel'].send_string('-1,{}'.format(self.current_controller_ind))
-        print('Current controller: {}'.format(self.current_controller_ind))
+        # print('Current controller: {}'.format(self.current_controller_ind))
 
     def select_next_abstract_action(self, abstract_state):
         """

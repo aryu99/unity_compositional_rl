@@ -13,7 +13,7 @@ import tikzplotlib
 # %%
 # load_folder_name = '2021-05-22_13-53-56_minigrid_labyrinth'
 # experiment_name = 'minigrid_labyrinth'
-load_folder_name = '2021-11-02_23-15-04_unity_labyrinth'
+load_folder_name = '2022-05-09_15-05-40_unity_labyrinth'
 experiment_name = 'unity_labyrinth'
 
 base_path = os.path.abspath(os.path.curdir)
@@ -73,16 +73,19 @@ ax.plot(x, comp_pred_success,
         markersize=large_marker_size,
         linewidth=large_linewidth,
         label='Lower Bound on Probability of Task Success')
-# ax.plot(x, comp_empirical_success, 
-#         color='black',
-#         marker='d',
-#         markersize=large_marker_size,
-#         linewidth=large_linewidth,
-#         label='Empirically Measured Probability of Task Success')
+ax.plot(x, comp_empirical_success, 
+        color='black',
+        marker='d',
+        markersize=large_marker_size,
+        linewidth=large_linewidth,
+        label='Empirically Measured Probability of Task Success')
 ax.legend(fontsize=15)
 
 yl = ax.get_ylim()
 ax.set_ylim(yl)
+ax.set_title('Success probability with Low-level Controller: TD3')
+ax.set_xlabel('Elapsed Total Training Steps')
+ax.set_ylabel('Probability Value')
 
 # ax.plot([0.8e6, 0.8e6], [yl[0],yl[1]],
 #         color='red',
@@ -91,6 +94,8 @@ ax.set_ylim(yl)
 
 # save_path = os.path.join(os.path.curdir, 'figures', 'training_curves.tex')
 # tikzplotlib.save(save_path)
+# plt.show()
+plt.savefig('results_td3_2.png')
 
 
 # %%

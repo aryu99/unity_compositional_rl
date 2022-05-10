@@ -1,6 +1,9 @@
 import numpy as np
 from numpy.core.numeric import roll
-from stable_baselines3 import PPO
+# from stable_baselines3 import PPO
+from stable_baselines3 import A2C
+# from stable_baselines3 import SAC
+# from stable_baselines3 import TD3
 import os, sys
 from datetime import datetime
 import pickle
@@ -189,7 +192,7 @@ class UnityLabyrinthController(object):
         self.data = controller_data['data']
 
         model_file = os.path.join(save_dir, 'model')
-        self.model = PPO.load(model_file, env=env)
+        self.model = A2C.load(model_file, env=env)
 
     def get_success_prob(self):
         # Return the most recently estimated probability of success
@@ -202,17 +205,36 @@ class UnityLabyrinthController(object):
     #     self.training_env.goal_states = self.final_states
 
     def _init_learning_alg(self, env, verbose=False):
-        self.model = PPO("MlpPolicy", 
+        # self.model = A2C("MlpPolicy", 
+        #                     env, 
+        #                     verbose=verbose,
+        #                     n_steps=512,
+        #                     batch_size=64,
+        #                     gae_lambda=0.95,
+        #                     gamma=0.99,
+        #                     n_epochs=10,
+        #                     ent_coef=0.0,
+        #                     learning_rate=2.5e-4,
+        #                     clip_range=0.2,
+        #                     tensorboard_log="./a2c_cartpole_tensorboard/")
+        # self.model = SAC("MlpPolicy", 
+        #                     env, 
+        #                     verbose=verbose,
+        #                     batch_size=64,
+        #                     gamma=0.99,
+        #                     learning_rate=2.5e-4,
+        #                     tensorboard_log="./sac_cartpole_tensorboard/")
+        self.model = A2C("MlpPolicy", 
                             env, 
                             verbose=verbose,
-                            n_steps=512,
-                            batch_size=64,
-                            gae_lambda=0.95,
-                            gamma=0.99,
-                            n_epochs=10,
-                            ent_coef=0.0,
+                            # gamma=0.98,
+                            gae_lambda= 0.9,
+                            vf_coef= 0.4,
+                            use_sde= True,
+                            # action_noise= 'normal',
                             learning_rate=2.5e-4,
-                            clip_range=0.2)
+                            tensorboard_log="./a2c_unity_tensorboard/")
+
 
     def demonstrate_capabilities(self, 
                                     env, 

@@ -27,7 +27,7 @@ tempdir_path = pathlib.Path(tempdir.name)
 print(f"All Tensorboards and logging are being written inside {tempdir_path}/.")
 
 # Load the unity demo file
-file_path = os.path.abspath('../demos/labyrinth/c1.demo')
+file_path = os.path.abspath('../demos/labyrinth/IRLnonlava.demo')
 sequence_length = 3382 #IRLnonlava.demo
 sequence_length = 2513 #IRLlava.demo
 # sequence_length = 1797 #wholelabyrinthhu_0.demo
@@ -47,42 +47,42 @@ side_channels['engine_config_channel'].set_configuration_parameters(
                                         time_scale=env_settings['time_scale'])
 
 # #################### AIRL
-# # Wrap the environemnt in a dummy vectorized environment.
-# venv = DummyVecEnv([lambda: env])
+# Wrap the environemnt in a dummy vectorized environment.
+venv = DummyVecEnv([lambda: env])
 
-# learner = sb3.PPO(
-#     env=env,
-#     policy="MlpPolicy",
-#     batch_size=64,
-#     ent_coef=0.0,
-#     learning_rate=0.0003,
-#     n_epochs=10,
-# )
-# reward_net = BasicRewardNet(
-#     venv.observation_space, venv.action_space, normalize_input_layer=RunningNorm
-# )
-# airl_trainer = AIRL(
-#     demonstrations=transitions,
-#     demo_batch_size=1024,
-#     gen_replay_buffer_capacity=2048,
-#     n_disc_updates_per_round=4,
-#     venv=venv,
-#     gen_algo=learner,
-#     reward_net=reward_net,
-#     allow_variable_horizon=True,
-# )
+learner = sb3.PPO(
+    env=env,
+    policy="MlpPolicy",
+    batch_size=64,
+    ent_coef=0.0,
+    learning_rate=0.0003,
+    n_epochs=10,
+)
+reward_net = BasicRewardNet(
+    venv.observation_space, venv.action_space, normalize_input_layer=RunningNorm
+)
+airl_trainer = AIRL(
+    demonstrations=transitions,
+    demo_batch_size=1024,
+    gen_replay_buffer_capacity=2048,
+    n_disc_updates_per_round=4,
+    venv=venv,
+    gen_algo=learner,
+    reward_net=reward_net,
+    allow_variable_horizon=True,
+)
 
-# # Set the environment task to be the overall composite task
-# side_channels['custom_side_channel'].send_string('1,1')
+# Set the environment task to be the overall composite task
+side_channels['custom_side_channel'].send_string('1,1')
 
-# # learner_rewards_before_training, _ = evaluate_policy(
-# #     learner, venv, 100, return_episode_rewards=True
-# # )
-# airl_trainer.train(300000)  # Note: set to 300000 for better results
-# # learner_rewards_after_training, _ = evaluate_policy(
-# #     learner, venv, 100, return_episode_rewards=True
-# # )
-# predict = airl_trainer.gen_algo.policy
+# learner_rewards_before_training, _ = evaluate_policy(
+#     learner, venv, 100, return_episode_rewards=True
+# )
+airl_trainer.train(300000)  # Note: set to 300000 for better results
+# learner_rewards_after_training, _ = evaluate_policy(
+#     learner, venv, 100, return_episode_rewards=True
+# )
+predict = airl_trainer.gen_algo.policy
 
 #######################################################################
 # Train BC on expert data.
@@ -101,24 +101,24 @@ side_channels['engine_config_channel'].set_configuration_parameters(
 #                             learning_rate=2.5e-4,
 #                             clip_range=0.2)
 
-bc_logger = logger.configure(tempdir_path / "BC/")
-bc_trainer = bc.BC(
-    observation_space=env.observation_space,
-    action_space=env.action_space,
-    # policy=ppo_model.policy,
-    #expert_data=transitions,
-    demonstrations=transitions,
-    # custom_logger=bc_logger,
-)
-# Set the environment task to be the overall composite task
-side_channels['custom_side_channel'].send_string('1,1')
+# bc_logger = logger.configure(tempdir_path / "BC/")
+# bc_trainer = bc.BC(
+#     observation_space=env.observation_space,
+#     action_space=env.action_space,
+#     # policy=ppo_model.policy,
+#     #expert_data=transitions,
+#     demonstrations=transitions,
+#     # custom_logger=bc_logger,
+# )
+# # Set the environment task to be the overall composite task
+# side_channels['custom_side_channel'].send_string('1,1')
 
-# Train to match expert demonstrations
-bc_trainer.train(n_epochs=15)
+# # Train to match expert demonstrations
+# bc_trainer.train(n_epochs=15)
 
-# # ppo_model.learn(1000)
+# # # ppo_model.learn(1000)
 
-predict = bc_trainer.policy.predict
+# predict = bc_trainer.policy.predict
 
 ######################################################################
 # ppo_policy = sb3.PPO("MlpPolicy", venv, verbose=1, n_steps=500)
